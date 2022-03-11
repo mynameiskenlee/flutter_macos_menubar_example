@@ -1,8 +1,8 @@
 # flutter_macos_menubar_example
 
 starter template for building menubar app in flutter
-![Demo](Demo.png)
 
+-------------------------------------------------------
 ## Getting Started
 
 1. Change to Content of macos/Runner/AppDelegate.swift
