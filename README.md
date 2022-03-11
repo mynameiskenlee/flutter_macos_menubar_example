@@ -77,7 +77,7 @@ class StatusBarController {
 <key>LSUIElement</key>
 <true/>
 ```
-To close the app programmatically, use platform channel to call the following code
+To close the app programmatically, use the following code
 ```[language=dart]
 exit(0)
 ```
