@@ -4,7 +4,7 @@ starter template for building menubar app in flutter
 
 -------------------------------------------------------
 ## Getting Started
-Clone this repo or follow the following step in your flutter project:
+use this template or follow the following step in your flutter project:
 
 1. Change to Content of macos/Runner/AppDelegate.swift
 ```[language=swift]
