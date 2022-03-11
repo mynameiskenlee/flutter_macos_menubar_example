@@ -4,10 +4,16 @@ starter template for building menubar app in flutter
 
 -------------------------------------------------------
 ## Getting Started
+Clone this repo or follow the following step in your flutter project:
 
 1. Change to Content of macos/Runner/AppDelegate.swift
 ```[language=swift]
-var statusBar: StatusBarController?
+import Cocoa
+import FlutterMacOS
+
+@NSApplicationMain
+class AppDelegate: FlutterAppDelegate {
+  var statusBar: StatusBarController?
   var popover = NSPopover.init()
   override init() {
     popover.behavior = NSPopover.Behavior.transient //to make the popover hide when the user clicks outside of it
@@ -24,6 +30,7 @@ var statusBar: StatusBarController?
     mainFlutterWindow.close() //close the default flutter window
     super.applicationDidFinishLaunching(aNotification)
   }
+}
 ```
 2. Add a new Swift file named 'StatusBarController.swift' in XCode
 ![Xcode > File > New > File...](Step2.1.png)
