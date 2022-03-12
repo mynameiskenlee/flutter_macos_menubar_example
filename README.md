@@ -1,6 +1,10 @@
 # flutter_macos_menubar_example
 
 starter template for building menubar app in flutter
+![Demo](Demo.png | width=25%)
+
+Use [multi_windows](https://github.com/mynameiskenlee/flutter_macos_menubar_example/tree/multi_windows) branch for example with addtional windows
+![multi_windows demo](multi_window.gif)
 
 -------------------------------------------------------
 ## Getting Started
