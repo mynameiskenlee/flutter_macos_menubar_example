@@ -1,8 +1,11 @@
 # flutter_macos_menubar_example
 
 starter template for building menubar app in flutter with multi window support
-![Demo](multi_window.gif | width=250)
+
+![Demo](multi_window.gif)
+
 This ride on [multi_window](https://pub.dev/packages/multi_window) package to build a menubar app with multi window support.
+
 Clone this branch for the example of menubar app with multi window support for your own use.
 
 ## Getting Started (menu bar popup only)
