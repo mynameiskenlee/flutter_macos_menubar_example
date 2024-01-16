@@ -17,7 +17,11 @@ class AppDelegate: FlutterAppDelegate {
     popover.contentSize = NSSize(width: 360, height: 360) //change this to your desired size
     popover.contentViewController = controller //set the content view controller for the popover to flutter view controller
     statusBar = StatusBarController.init(popover)
-    mainFlutterWindow.close() //close the default flutter window
+    guard let window = mainFlutterWindow else {
+            print("mainFlutterWindow is nil")
+            return
+        }
+    window.close()
     super.applicationDidFinishLaunching(aNotification)
   }
 }
