@@ -9,6 +9,7 @@ class PopoverContentController: NSViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable, message: "Loading from a nib is not supported")
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

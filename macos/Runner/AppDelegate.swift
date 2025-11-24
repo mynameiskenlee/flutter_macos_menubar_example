@@ -1,5 +1,6 @@
 import Cocoa
 import FlutterMacOS
+import os.log
 
 @main
 class AppDelegate: FlutterAppDelegate {
@@ -19,7 +20,7 @@ class AppDelegate: FlutterAppDelegate {
   var flutterEngine: FlutterEngine?
   
   override func applicationDidFinishLaunching(_ aNotification: Notification) {
-    let flutterEngine = FlutterEngine(name: "my flutter engine", project: nil)
+    let flutterEngine = FlutterEngine(name: Bundle.main.bundleIdentifier ?? "io.flutter.engine", project: nil)
     flutterEngine.run(withEntrypoint: nil)
     self.flutterEngine = flutterEngine
     
@@ -31,7 +32,7 @@ class AppDelegate: FlutterAppDelegate {
     popover.contentViewController = popoverController //set the content view controller for the popover to flutter view controller
     statusBar = StatusBarController.init(popover)
     guard let window = mainFlutterWindow else {
-            print("mainFlutterWindow is nil")
+            os_log("mainFlutterWindow is nil", type: .error)
             return
         }
     window.close()
