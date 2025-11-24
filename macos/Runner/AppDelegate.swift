@@ -21,8 +21,6 @@ class AppDelegate: FlutterAppDelegate {
   override func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
   return true
 }
-
-  var flutterEngine: FlutterEngine?
   
   override func applicationDidFinishLaunching(_ aNotification: Notification) {
     guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
@@ -30,8 +28,7 @@ class AppDelegate: FlutterAppDelegate {
     }
     let newFlutterEngine = FlutterEngine(name: bundleIdentifier, project: nil)
     newFlutterEngine.run(withEntrypoint: nil)
-    self.flutterEngine = newFlutterEngine
-    
+        
     let controller = FlutterViewController(engine: newFlutterEngine, nibName: nil, bundle: nil)
     RegisterGeneratedPlugins(registry: newFlutterEngine)
     

@@ -16,7 +16,6 @@ class PopoverContentController: NSViewController {
     
     override func loadView() {
         self.view = NSView()
-        self.view.autoresizingMask = [.width, .height]
     }
     
     override func viewDidLoad() {
