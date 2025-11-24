@@ -37,7 +37,7 @@ class AppDelegate: FlutterAppDelegate {
     
     let popoverController = PopoverContentController(flutterViewController: controller)
     popover.contentSize = NSSize(width: Popover.width, height: Popover.height) 
-    popover.contentViewController = popoverController //set the content view controller for the popover to flutter view controller
+    popover.contentViewController = popoverController //set the content view controller for the popover
     statusBar = StatusBarController.init(popover)
     guard let window = mainFlutterWindow else {
             os_log("mainFlutterWindow is nil", type: .error)
