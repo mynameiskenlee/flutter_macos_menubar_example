@@ -19,8 +19,8 @@ class AppDelegate: FlutterAppDelegate {
   }
 
   override func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
-  return true
-}
+    return true
+  }
   
   override func applicationDidFinishLaunching(_ aNotification: Notification) {
     guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
