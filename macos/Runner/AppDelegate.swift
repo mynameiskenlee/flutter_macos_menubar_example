@@ -20,7 +20,10 @@ class AppDelegate: FlutterAppDelegate {
   var flutterEngine: FlutterEngine?
   
   override func applicationDidFinishLaunching(_ aNotification: Notification) {
-    let flutterEngine = FlutterEngine(name: Bundle.main.bundleIdentifier ?? "io.flutter.engine", project: nil)
+    guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
+        fatalError("bundleIdentifier must not be nil")
+    }
+    let flutterEngine = FlutterEngine(name: bundleIdentifier, project: nil)
     flutterEngine.run(withEntrypoint: nil)
     self.flutterEngine = flutterEngine
     
@@ -36,5 +39,6 @@ class AppDelegate: FlutterAppDelegate {
             return
         }
     window.close()
+    super.applicationDidFinishLaunching(aNotification)
   }
 }
