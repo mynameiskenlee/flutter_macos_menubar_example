@@ -24,8 +24,13 @@ class PopoverContentController: NSViewController {
         
         self.addChild(flutterViewController)
         view.addSubview(flutterViewController.view)
-        flutterViewController.view.frame = view.bounds
-        flutterViewController.view.autoresizingMask = [.width, .height]
+        flutterViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            flutterViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            flutterViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            flutterViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            flutterViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
     
     override func viewDidAppear() {

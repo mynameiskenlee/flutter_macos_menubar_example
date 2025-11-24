@@ -6,6 +6,11 @@ import os.log
 class AppDelegate: FlutterAppDelegate {
   var statusBar: StatusBarController?
   var popover = NSPopover.init()
+  private enum Popover {
+    static let width: CGFloat = 360
+    static let height: CGFloat = 360
+    //change this to your desired size
+  }
   override init() {
     popover.behavior = NSPopover.Behavior.transient //to make the popover hide when the user clicks outside of it
   }
@@ -31,7 +36,7 @@ class AppDelegate: FlutterAppDelegate {
     RegisterGeneratedPlugins(registry: newFlutterEngine)
     
     let popoverController = PopoverContentController(flutterViewController: controller)
-    popover.contentSize = NSSize(width: 360, height: 360) //change this to your desired size
+    popover.contentSize = NSSize(width: Popover.width, height: Popover.height) 
     popover.contentViewController = popoverController //set the content view controller for the popover to flutter view controller
     statusBar = StatusBarController.init(popover)
     guard let window = mainFlutterWindow else {
