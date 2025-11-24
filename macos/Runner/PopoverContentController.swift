@@ -8,7 +8,7 @@ class PopoverContentController: NSViewController {
         self.flutterViewController = flutterViewController
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     @available(*, unavailable, message: "Loading from a nib is not supported")
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -23,8 +23,8 @@ class PopoverContentController: NSViewController {
         super.viewDidLoad()
         
         self.addChild(flutterViewController)
-        self.view.addSubview(flutterViewController.view)
-        flutterViewController.view.frame = self.view.bounds
+        view.addSubview(flutterViewController.view)
+        flutterViewController.view.frame = view.bounds
         flutterViewController.view.autoresizingMask = [.width, .height]
     }
     

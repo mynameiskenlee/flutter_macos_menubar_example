@@ -23,12 +23,12 @@ class AppDelegate: FlutterAppDelegate {
     guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
         fatalError("bundleIdentifier must not be nil")
     }
-    let flutterEngine = FlutterEngine(name: bundleIdentifier, project: nil)
-    flutterEngine.run(withEntrypoint: nil)
-    self.flutterEngine = flutterEngine
+    let newFlutterEngine = FlutterEngine(name: bundleIdentifier, project: nil)
+    newFlutterEngine.run(withEntrypoint: nil)
+    self.flutterEngine = newFlutterEngine
     
-    let controller = FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
-    RegisterGeneratedPlugins(registry: flutterEngine)
+    let controller = FlutterViewController(engine: newFlutterEngine, nibName: nil, bundle: nil)
+    RegisterGeneratedPlugins(registry: newFlutterEngine)
     
     let popoverController = PopoverContentController(flutterViewController: controller)
     popover.contentSize = NSSize(width: 360, height: 360) //change this to your desired size
