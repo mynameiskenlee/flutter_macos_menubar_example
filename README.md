@@ -13,37 +13,104 @@ Use [multi_windows](https://github.com/mynameiskenlee/flutter_macos_menubar_exam
 use this template or follow the following step in your flutter project:
 
 1. Change to Content of macos/Runner/AppDelegate.swift
-```[language=swift]
+```swift
 import Cocoa
 import FlutterMacOS
+import os.log
 
-@NSApplicationMain
+@main
 class AppDelegate: FlutterAppDelegate {
   var statusBar: StatusBarController?
   var popover = NSPopover.init()
+  private enum Popover {
+    static let width: CGFloat = 360
+    static let height: CGFloat = 360
+    //change this to your desired size
+  }
   override init() {
     popover.behavior = NSPopover.Behavior.transient //to make the popover hide when the user clicks outside of it
   }
   override func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
     return false
   }
+
+  override func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+    return true
+  }
+  
   override func applicationDidFinishLaunching(_ aNotification: Notification) {
-    let controller: FlutterViewController =
-      mainFlutterWindow?.contentViewController as! FlutterViewController
-    popover.contentSize = NSSize(width: 360, height: 360) //change this to your desired size
-    popover.contentViewController = controller //set the content view controller for the popover to flutter view controller
+    guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
+        fatalError("bundleIdentifier must not be nil")
+    }
+    let newFlutterEngine = FlutterEngine(name: bundleIdentifier, project: nil)
+    newFlutterEngine.run(withEntrypoint: nil)
+        
+    let controller = FlutterViewController(engine: newFlutterEngine, nibName: nil, bundle: nil)
+    RegisterGeneratedPlugins(registry: newFlutterEngine)
+    
+    let popoverController = PopoverContentController(flutterViewController: controller)
+    popover.contentSize = NSSize(width: Popover.width, height: Popover.height)
+    popover.contentViewController = popoverController
     statusBar = StatusBarController.init(popover)
-    mainFlutterWindow.close() //close the default flutter window
+    guard let window = mainFlutterWindow else {
+            os_log("mainFlutterWindow is nil", type: .error)
+            return
+        }
+    window.close()
     super.applicationDidFinishLaunching(aNotification)
   }
 }
 ```
-2. Add a new Swift file named 'StatusBarController.swift' in XCode
+2. Add a new Swift file named 'PopoverContentController.swift' in macos/Runner
+```swift
+import Cocoa
+import FlutterMacOS
+
+class PopoverContentController: NSViewController {
+    private let flutterViewController: FlutterViewController
+    
+    init(flutterViewController: FlutterViewController) {
+        self.flutterViewController = flutterViewController
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable, message: "Loading from a nib is not supported")
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func loadView() {
+        self.view = NSView()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.addChild(flutterViewController)
+        view.addSubview(flutterViewController.view)
+        flutterViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            flutterViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            flutterViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            flutterViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            flutterViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        // Ensure the window becomes key and the app is active when the popover appears
+        self.view.window?.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+}
+```
+3. Add a new Swift file named 'StatusBarController.swift' in macos/Runner
 ![Xcode > File > New > File...](Step2.1.png)
 ![Select Swift File](Step2.2.png)
 ![Name it StatusBarController.swift](Step2.3.png)
-3. Add the following code to the StatusBarController.swift
-```[language=swift]
+Add the following code to the StatusBarController.swift
+```swift
 import AppKit
 
 class StatusBarController {
@@ -53,7 +120,7 @@ class StatusBarController {
     
     init(_ popover: NSPopover) {
         self.popover = popover
-        statusBar = NSStatusBar.init()
+        statusBar = NSStatusBar.system
         statusItem = statusBar.statusItem(withLength: 28.0)
         
         if let statusBarButton = statusItem.button {
